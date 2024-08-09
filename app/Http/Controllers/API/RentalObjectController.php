@@ -295,7 +295,7 @@ class RentalObjectController extends BaseController
             $inputImage['rental_object_id'] = $request->input('rental_object_id');
             $inputImage['name'] = $uuid.'.'.$request->image->extension();
             $inputImage['extension'] = $request->image->extension();
-            $inputImage['is_main'] = $request->input('is_main');
+            $inputImage['is_main'] = false;
 
             $rentalObjectImage = RentalObjectImage::create($inputImage);
 
@@ -381,9 +381,34 @@ class RentalObjectController extends BaseController
 
         $rentalObject->title = $request->input('title') ?? '';
         $rentalObject->descr = $request->input('descr') ?? '';
+        $rentalObject->object_status = 'free';
 
         $rentalObject->save();
         
         return $this->sendResponse($rentalObject, 'Rental object RentalObject saved successfully.');
+    }
+
+    /**
+     * Set title and descr to rental object
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function getRentalObject(Request $request): JsonResponse
+    {
+        $validator = Validator::make($request->all(), [
+            'id' => 'required|numeric',
+        ]);
+   
+        if($validator->fails()){
+            return $this->sendError('Validation Error.', $validator->errors());
+        }
+
+        // todo: add check for exists rental object
+
+        $user = $request->user();
+
+        $rentalObject = RentalObject::find($request->input('id'));
+        
+        return $this->sendResponse($rentalObject, 'Rental object RentalObject send successfully.');
     }
 }

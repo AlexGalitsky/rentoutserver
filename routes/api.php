@@ -40,4 +40,7 @@ Route::middleware('auth:sanctum')->group( function () {
     Route::post('/rental-objects/delete-image', [RentalObjectController::class, 'deleteImage']);
     Route::post('/rental-objects/set-image-is-main', [RentalObjectController::class, 'setImageIsMain']);
     Route::post('/rental-objects/set-title-and-descr', [RentalObjectController::class, 'setTitleAndDescr']);
+    Route::get('/rental-objects/get-rental-object', [RentalObjectController::class, 'getRentalObject']);
+
+    Route::get('/requests', [RequestsController::class, 'index']);
 });

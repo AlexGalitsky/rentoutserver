@@ -15,6 +15,6 @@ class RentalObjectImage extends Model
      * @var array
      */
     protected $fillable = [
-        'rental_object_id', 'name', 'extension',
+        'rental_object_id', 'name', 'extension', 'is_main',
     ];
 }
